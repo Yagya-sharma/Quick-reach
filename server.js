@@ -1,13 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const path=require('path');
 const bodyParser = require('body-parser');
-
+const path=require('path');
 const app = express();
-const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
+const PORT = process.env.PORT || 3000;
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, "public")));
@@ -16,6 +15,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
 let favorites = [];
 app.get('/api/favorites', (req, res) => {
   res.json(favorites);
@@ -49,8 +49,6 @@ app.put('/api/favorites/:index', (req, res) => {
     res.status(400).json({ error: 'Invalid request' });
   }
 });
-
-//const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);
 });
