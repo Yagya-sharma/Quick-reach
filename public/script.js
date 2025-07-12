@@ -1,4 +1,5 @@
 // 1. Favourite add
+window.onload=()=> { 
 document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.querySelector(".favorite-add");
   const container = document.querySelector(".favorite-box");
@@ -114,3 +115,31 @@ window.addEventListener("scroll", function () {
     }
   });
 });
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Add setting form ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+
+document.getElementById("settings-btn").addEventListener("click", () => {
+  const form = document.getElementById("settings-form");
+  form.style.display = form.style.display === "none" ? "block" : "none";
+});
+
+document.getElementById("submit-settings").addEventListener("click", async () => {
+  const username = document.getElementById("username").value;
+
+  try {
+    const res = await fetch("/api/settings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    });
+
+    const result = await res.json();
+    alert(result.message);
+  } catch (err) {
+    alert("Something went wrong!");
+    console.error(err);
+  }
+})
+}
