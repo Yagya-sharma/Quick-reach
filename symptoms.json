@@ -1,0 +1,14 @@
+[
+  {
+    "date": "2025-07-03",
+    "symptom": "fever",
+    "severity": "2",
+    "notes": ""
+  },
+  {
+    "date": "2025-07-25",
+    "symptom": "cold",
+    "severity": "4",
+    "notes": ""
+  }
+]

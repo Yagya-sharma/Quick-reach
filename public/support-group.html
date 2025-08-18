@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="support.css">
+</head>
+<body>
+
+<header>
+     <div class="logo"><i class="fa-regular fa-heart"></i> Hope & Healing</div>
+        <a href="index.html">Back to Home</a>
+</header>
+    <div class="app">
+        <div class="screen join-screen active">
+            <div class="form">
+                <h2>Join Chatroom</h2>
+                <div class="form-input">
+                    <label>Username</label>
+                    <input type="text" id="username">
+                </div>
+                <div class="form-input">
+                    <button id="join-user">Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="screen chat-screen">
+            <div class="header">
+                <div class="chatroom">Chatroom</div>
+                <button id="exit-chat">Exit</button>
+            </div>
+            <div class="messages">
+                <div class="message my-message">
+                    <div>
+                        <div class="name">You</div>
+                        <div class="text">Hi</div>
+                    </div>
+                </div>
+                <div class="update">
+                    abc joined the conversation
+                </div>
+                <div class="message other-message">
+                    <div>
+                        <div class="name">abc</div>
+                        <div class="text">Hi</div>
+                    </div>
+                </div>
+            </div>
+            <div class="typebox">
+                <input type="text" id="message-input">
+                <button id="send-message">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>

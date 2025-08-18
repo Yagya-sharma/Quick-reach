@@ -1,5 +1,5 @@
 // 1. Favourite add
-window.onload=()=> { 
+
 document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.querySelector(".favorite-add");
   const container = document.querySelector(".favorite-box");
@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "🗑";
+    deleteBtn.className="favorite-btn delete-btn"
     deleteBtn.style.marginLeft = "10px";
     deleteBtn.onclick = () => {
       fetch(`/api/favorites/${index}`, {
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
  const renameBtn = document.createElement("button");
     renameBtn.textContent = "✏";
+    renameBtn.className="favorite-btn rename-btn";
     renameBtn.onclick = () => {
       const newName = prompt("Enter new name:", name);
       if (newName) {
@@ -118,28 +120,22 @@ window.addEventListener("scroll", function () {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Add setting form ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
-document.getElementById("settings-btn").addEventListener("click", () => {
-  const form = document.getElementById("settings-form");
-  form.style.display = form.style.display === "none" ? "block" : "none";
-});
 
-document.getElementById("submit-settings").addEventListener("click", async () => {
-  const username = document.getElementById("username").value;
 
-  try {
-    const res = await fetch("/api/settings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username }),
-    });
 
-    const result = await res.json();
-    alert(result.message);
-  } catch (err) {
-    alert("Something went wrong!");
-    console.error(err);
-  }
-})
+function showPopupReminder() {
+  const popup = document.getElementById("reminder-popup");
+  popup.classList.remove("hidden");
 }
+
+// Close popup
+// document.getElementById("close-popup").addEventListener("click", () => {
+//   document.getElementById("reminder-popup").classList.add("hidden");
+// });
+
+// Auto-show after 5 seconds (example)
+// setTimeout(() => {
+//   showPopupReminder();
+// }, 5000);
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`My support group~~~~~~~~~~~~~~~~~~

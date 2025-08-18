@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medication Schedule</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>.medication-h1{
+  text-align: center;
+  color:#b3005e;
+  margin: 2rem;
+} 
+.form-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.form-box input[type="text"],
+.form-box input[type="time"] {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 200px;
+}
+
+.form-box button {
+  background-color: #e91e63;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-box button:hover {
+  background-color: #c2185b;
+}
+
+#medList {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#medList li {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+#medList button {
+  background: #ff1744;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+#medList button:hover {
+  background: #c51162;
+}
+</style>
+</head>
+
+<body>
+    <header>
+        <div class="logo"><i class="fa-regular fa-heart"></i> Hope & Healing</div>
+        <a href="index.html">Back to Home</a>
+    </header>
+    <h1 class="medication-h1">🩺 Medication Schedule</h1>
+    <div class="form-box">
+        <input type="text" id="medName" placeholder="Medicine Name" />
+        <input type="time" id="medTime"  />
+        <button onclick="addMed()">Add</button>
+    </div>
+    <!-- <h3>Your Medications</h3> -->
+    <ul id="medList"></ul>
+    <script>
+    if ("Notification" in window && Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+    async function loadMeds() {
+      const res = await fetch('/api/medications');
+      const meds = await res.json();
+      const list = document.getElementById('medList');
+      list.innerHTML = "";
+
+      meds.forEach((med, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${med.name} - ${med.time}
+          <button onclick="deleteMed(${index})">❌</button>`;
+        list.appendChild(li);
+      });
+    }
+    function addMed() {
+      const name = document.getElementById("medName").value;
+      const time = document.getElementById("medTime").value;
+      if (!name || !time) return;
+
+      fetch('/api/medications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, time })
+      }).then(() => {
+        loadMeds();
+        scheduleReminder(name, time); // Schedule reminder here!
+      });
+    }
+
+    function scheduleReminder(name, time) {
+      const now = new Date();
+      const [hours, minutes] = time.split(":").map(Number);
+      const reminderTime = new Date();
+      reminderTime.setHours(hours, minutes, 0, 0);
+
+      let delay = reminderTime - now;
+      if (delay < 0) delay += 86400000;
+
+      setTimeout(() => {
+        showNotification(name);
+      }, delay);
+    }
+    async function deleteMed(index) {
+            await fetch(`/api/medications/${index}`, { method: 'DELETE' });
+            loadMeds();
+        }
+    function showNotification(name) {
+      if (Notification.permission === "granted") {
+        new Notification("⏰ Medication Reminder", {
+          body: `It's time to take your medicine: ${name}`,
+          icon: "https://cdn-icons-png.flaticon.com/512/2750/2750607.png",
+        });
+      }
+    }
+    loadMeds();
+    </script>
+</body>
+
+</html>

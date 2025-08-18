@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Virtual Support Group</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #fff0f5, #f3f9ff);
+  margin: 0;
+  padding: 0;
+}
+
+.virtual-h1 {
+  text-align: center;
+  margin: 2rem 0;
+  color: #ad1457;
+  font-size: 2.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+#session-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.session-card {
+  background-color: white;
+  padding: 1.5rem;
+  margin: 1rem;
+  border-left: 6px solid #ad1457;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.session-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.session-card h3 {
+  margin: 0 0 0.5rem;
+  color: #ad1457;
+  font-size: 1.4rem;
+}
+
+.session-card p {
+  margin: 0.3rem 0;
+  color: #555;
+}
+
+.session-card button {
+  background-color: #ff66b2;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.session-card button:hover {
+  background-color: #e0559f;
+  transform: scale(1.05);
+}
+  </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><i class="fa-regular fa-heart"></i> Hope & Healing</div>
+        <a href="index.html">Back to Home</a>
+    </header>
+  <h1 class="virtual-h1">Upcoming Virtual Support Sessions</h1>
+  <div id="session-list"></div>
+
+  <script>
+    async function loadSessions() {
+      const res = await fetch('/api/sessions');
+      const sessions = await res.json();
+      const list = document.getElementById('session-list');
+
+      sessions.forEach(session => {
+        const div = document.createElement('div');
+        div.className = "session-card";
+        div.innerHTML = `
+          <h3>${session.topic}</h3>
+          <p>Date: ${session.date}</p>
+          <p>Host: ${session.host}</p>
+          <button onclick='joinSession("${session.id}")'>Join Session</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+    async function joinSession(id) {
+      const name = prompt("Enter your name to join:");
+      if (name) {
+        const res = await fetch('/api/sessions/join', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId: id, name })
+        });
+        const result = await res.json();
+        alert(result.message);
+      }
+    }
+
+    loadSessions();
+  </script>
+</body>
+</html>

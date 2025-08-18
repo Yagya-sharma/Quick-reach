@@ -1,0 +1,23 @@
+[
+    {
+        "id":1,
+        "name":"Dr. Aarti Mehta",
+        "specialization":"Emotional Wellness",
+        "experience":"10 years",
+        "contact":"aarti.mehta@example.com"
+    },
+    {
+        "id":2,
+        "name":"Dr. Rajesh Kumar",
+        "specialization":"Cancer coping Strategies",
+        "experience":"8 years",
+        "contact":"rajesh.k@example.com"
+    },
+    {
+        "id":3,
+        "name":"Dr. Neha Sharma",
+        "specialization":"Emotional Wellness",
+        "experience":"6 years",
+        "contact":"neha.sharma@example.com"
+    }
+]

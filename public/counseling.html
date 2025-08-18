@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>One-on-One Counseling</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .counseling-h1{
+  color: #a1265d;
+  margin:2rem;
+  text-align: center;
+}
+#counselor-list {
+  max-width: 900px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem 2rem;
+}
+.counselor-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+}
+.counselor-card:hover {
+  transform: translateY(-5px);
+}
+
+.counselor-card h3 {
+  margin-top: 0;
+  color: #d81b60;
+  font-size: 1.2rem;
+}
+.counselor-card p {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0.5rem 0 1rem;
+}
+
+.counselor-card button {
+  background-color: #ec407a;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.counselor-card button:hover {
+  background-color: #c2185b;
+}
+
+/* Make it mobile-friendly */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .counselor-card {
+    padding: 1rem;
+  }
+
+  .counselor-card button {
+    width: 100%;
+    font-size: 1rem;
+  }
+}
+  </style>
+</head>
+<body>
+   <header>
+        <div class="logo"><i class="fa-regular fa-heart"></i> Hope & Healing</div>
+        <a href="index.html">Back to Home</a>
+    </header>
+  <h1 class="counseling-h1">Book a One-on-One Counseling Session</h1>
+
+  <div id="counselor-list"></div>
+
+  <script>
+    async function loadCounselors() {
+      const res = await fetch('/api/counselors');
+      const counselors = await res.json();
+      const list = document.getElementById('counselor-list');
+
+      counselors.forEach(c => {
+        const div = document.createElement('div');
+        div.className = "counselor-card";
+        div.innerHTML = `
+          <h3>${c.name}</h3>
+          <p>Specialty: ${c.specialty || "Not specified"}</p>
+          <button onclick='book("${c.name}")'>Book Session</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    async function book(name) {
+      const user = prompt(`Enter your name to book with ${name}`);
+      if (user) {
+        const res = await fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ counselor: name, user })
+        });
+         const result = await res.json();
+        alert(result.message);
+      }
+    }
+
+    loadCounselors();
+  </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Register</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color:black;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color:#74ebd5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color:#37e9c9;
+    }
+
+    .toggle-password {
+      display: flex;
+      align-items: center;
+      margin-top: -10px;
+      margin-bottom: 15px;
+    }
+
+    .toggle-password input {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Doctor Register</h2>
+    <form id="registerForm">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" id="registerPassword" placeholder="Password" required />
+      
+      <div class="toggle-password">
+        <input type="checkbox" onclick="toggleRegisterPassword()"> Show Password
+      </div>
+      
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleRegisterPassword() {
+      const pass = document.getElementById('registerPassword');
+      pass.type = pass.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html> -->
+
+
+<!-- register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Register</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    .form-box {
+      background: white;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 350px;
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .toggle-btn {
+      float: right;
+      margin-top: -35px;
+      margin-right: 10px;
+      cursor: pointer;
+      color: #555;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #ff7f50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff6347;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-box">
+    <h2>Doctor Register</h2>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Name" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <span class="toggle-btn" onclick="togglePassword()">👁</span>
+      <div class="error" id="error"></div>
+      <button type="submit">Register</button>
+    </form>
+    <div id="result" style="margin-top: 10px; font-weight: bold;"></div>
+  </div>
+
+<script>
+  const registerForm = document.getElementById('registerForm');
+  const nameInput = document.getElementById('regName');
+  const emailInput = document.getElementById('regEmail');
+  const passwordInput = document.getElementById('regPassword');
+  const confirmPasswordInput = document.getElementById('regConfirmPassword');
+  const resultDiv = document.getElementById('regResult');
+
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    if (!name || !email || !password || !confirmPassword) {
+      resultDiv.textContent = 'Please fill all fields!';
+      resultDiv.style.color = 'red';
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      resultDiv.textContent = 'Passwords do not match!';
+      resultDiv.style.color = 'red';
+      return;
+    }
+
+    try {
+      const res = await fetch('/register-doctor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        resultDiv.textContent = 'Doctor Registered Successfully!';
+        resultDiv.style.color = 'green';
+
+        // Clear inputs
+        nameInput.value = '';
+        emailInput.value = '';
+        passwordInput.value = '';
+        confirmPasswordInput.value = '';
+
+        // Hide message after 3 seconds
+        setTimeout(() => {
+          resultDiv.textContent = '';
+        }, 3000);
+      } else {
+        resultDiv.textContent = data.message || 'Registration failed!';
+        resultDiv.style.color = 'red';
+      }
+    } catch (err) {
+      console.error(err);
+      resultDiv.textContent = 'An error occurred.';
+      resultDiv.style.color = 'red';
+    }
+  });
+</script>
+</body>
+</html>

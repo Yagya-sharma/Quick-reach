@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="style.css">
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    /* margin: 30px; */
+    background-color: #f5f8fa;
+  }
+
+  h2 {
+    text-align: center;
+    color:rgb(210, 67, 115);
+    margin:2rem;
+  }
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  input, textarea, button {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  select {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+  input[type="date"],
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    width: 150px;
+  }
+
+  textarea {
+    resize: vertical;
+    height: 40px;
+  }
+
+  button {
+    background-color:rgb(213, 44, 159);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color:rgb(205, 85, 167);
+  }
+
+  #symptomList {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  #symptomList div {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  b {
+    color: #34495e;
+  }
+
+  i {
+    color: #555;
+  }
+</style>
+</head>
+<body>
+    <header>
+        <div class="logo"><i class="fa-regular fa-heart"></i> Hope & Healing</div>
+        <a href="index.html">Back to Home</a>
+    </header>
+    <h2>Symptom Tracker</h2>
+<form id="symptomForm">
+  <input type="date" id="date" required />
+  <input type="text" id="symptom" placeholder="Symptom" required />
+  <select id="severity" required>
+  <option value="">Select Severity</option>
+  <option value="1">1 - Very Mild</option>
+  <option value="2">2 - Mild</option>
+  <option value="3">3 - Moderate</option>
+  <option value="4">4 - Severe</option>
+  <option value="5">5 - Very Severe</option>
+</select>
+  <textarea id="notes" placeholder="Notes"></textarea>
+  <button type="submit">Add Symptom</button>
+</form>
+
+<div id="symptomList"></div>
+
+<script>
+document.getElementById("symptomForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const entry = {
+    date: document.getElementById("date").value,
+    symptom: document.getElementById("symptom").value,
+    severity: document.getElementById("severity").value,
+    notes: document.getElementById("notes").value,
+  };
+
+  const res = await fetch("/api/symptoms", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(entry),
+  });
+
+  if (res.ok) {
+    alert("Symptom added!");
+    document.getElementById("symptomForm").reset();
+    loadSymptoms();
+  }
+});
+
+async function loadSymptoms() {
+  const res = await fetch("/api/symptoms");
+  const data = await res.json();
+  const list = data.map(s => `
+    <div>
+      <b>${s.date}</b> - ${s.symptom} (Severity: ${s.severity})<br/>
+      <i>${s.notes}</i>
+    </div><hr/>
+  `).join("");
+  document.getElementById("symptomList").innerHTML = list;
+}
+
+window.onload = loadSymptoms;
+</script>
+</body>
+</html>

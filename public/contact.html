@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Care Team</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  /* padding: 20px; */
+  background: #f3f3f3;
+}
+.contact-section {
+  max-width: 500px;
+  margin-top:2rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.contact-section h2 {
+  text-align: center;
+  color: #d63384;
+}
+#contact-form input, #contact-form textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+#contact-form button {
+  background: #d63384;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#contact-form button:hover {
+  background: #c82373;
+}
+#status {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+  </style>
+</head>
+<body>
+   <header>
+        <div class="logo"><i class="fa-regular fa-heart"></i> Hope & Healing</div>
+        <a href="index.html">Back to Home</a>
+    </header>
+  <section class="contact-section">
+    <h2>Contact Care Team</h2>
+    <form id="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message to Care Team" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="status"></p>
+  </section>
+
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        email: form.email.value,
+        message: form.message.value,
+      };
+
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      document.getElementById('status').textContent = result.message;
+      form.reset();
+    });
+  </script>
+</body>
+</html>
