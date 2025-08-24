@@ -1,0 +1,294 @@
+/* ================== RESET ================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ================== BACKGROUND ================== */
+body {
+  min-height: 100vh;
+  color: #fff;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated glowing orbs */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
+  animation: aurora 20s infinite alternate ease-in-out;
+  z-index: 0;
+}
+
+@keyframes aurora {
+  0%   { transform: scale(1) rotate(0deg); opacity: 0.8; }
+  50%  { transform: scale(1.2) rotate(20deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-20deg); opacity: 0.8; }
+}
+
+/* ================== HEADER ================== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #e879f9;
+}
+
+header a {
+  text-decoration: none;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+header a:hover {
+  background: rgba(236, 72, 153, 0.3);
+  transform: scale(1.05);
+}
+
+/* ================== MAIN ================== */
+.container {
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #a855f7, #ec4899, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  animation: fadeIn 1.5s ease;
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+  color: #cbd5e1;
+  font-size: 1rem;
+}
+
+/* ================== URGENT SUPPORT ================== */
+.urgent-support {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 2rem;
+  margin: 3rem auto;
+  border-radius: 16px;
+ max-width:800px;
+  transition: transform 0.3s ease;
+  
+}
+
+.urgent-support:hover {
+  transform: translateY(-5px);
+}
+
+.urgent-title {
+  color: #f472b6;
+  text-align: left;
+  font-size: 1.4rem;
+}
+
+.urgent-options {
+  display: flex;
+  justify-content:space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.urgent-options a{
+    text-decoration: none;
+}
+
+
+
+.urgent-box {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  background: rgba(236, 72, 153, 0.15);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  gap:1rem
+}
+
+.urgent-box:hover {
+  background: rgba(236, 72, 153, 0.25);
+  transform: scale(1.05);
+}
+
+.tag {
+  background: rgba(139, 92, 246, 0.3);
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+/* ================== SUPPORT CARDS ================== */
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.support-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.support-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.support-card .icon {
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+  color: #a855f7;
+}
+
+.support-card h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.support-card p {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.support-card a {
+  display: block;
+  color: #f472b6;
+  background-color:rgba(236, 72, 153, 0.15) ;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  text-decoration: none;
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  border-radius: 12px;
+}
+
+.support-card a:hover {
+  color: #f9a8d4;
+}
+
+/* ================== FAVORITES ================== */
+.favorite-section h2 {
+  font-size: 1.4rem;
+  margin: 2rem 0 1rem;
+  text-align: left;
+  color: #facc15;
+}
+
+.favorite-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.favorite-card {
+  flex: 1 1 180px;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+  text-align: center;
+  padding: 1rem 1.5rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.favorite-card a{
+    text-decoration: none;
+    color:#a855f7
+}
+
+.favorite-card:hover {
+  transform: scale(1.05);
+  background: rgba(139, 92, 246, 0.25);
+}
+
+
+
+/* ================== FOOTER ================== */
+.footer {
+  background: rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+}
+
+.footer-btn {
+  background: rgba(236, 72, 153, 0.2);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  color: #fff;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  
+}
+
+.footer-btn:hover {
+  background: rgba(236, 72, 153, 0.35);
+  transform: scale(1.05);
+}
+.footer-right a{
+    text-decoration: none;
+}
+
+/* ================== ANIMATIONS ================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -4,74 +4,147 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Virtual Support Group</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style1.css" />
   <style>
-    body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to bottom right, #fff0f5, #f3f9ff);
-  margin: 0;
-  padding: 0;
+   /* ---------------- GLOBAL BACKGROUND THEME ---------------- */
+/* Background animation */
+@keyframes auroraMove {
+  0% {
+    background-position: 20% 80%, 80% 20%, 40% 40%;
+  }
+  100% {
+    background-position: 25% 75%, 75% 25%, 45% 45%;
+  }
 }
 
+/* ---------------- HEADER ---------------- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1rem 2rem;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+header .logo {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+header a:hover {
+  opacity: 0.8;
+}
+
+/* ---------------- TITLE ---------------- */
 .virtual-h1 {
   text-align: center;
   margin: 2rem 0;
-  color: #ad1457;
   font-size: 2.2rem;
-  font-weight: bold;
+  font-weight: 700;
+  background: linear-gradient(90deg, #9f7aea, #ec4899, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 1.5s ease-in-out;
   letter-spacing: 1px;
 }
 
+/* ---------------- SESSION CARDS ---------------- */
 #session-list {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 3rem;
 }
 
 .session-card {
-  background-color: white;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
   padding: 1.5rem;
   margin: 1rem;
-  border-left: 6px solid #ad1457;
-  border-radius: 12px;
   max-width: 700px;
   width: 90%;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: fadeUp 0.8s ease both;
 }
 
 .session-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
 }
 
 .session-card h3 {
   margin: 0 0 0.5rem;
-  color: #ad1457;
   font-size: 1.4rem;
+  color: #fff;
 }
 
 .session-card p {
   margin: 0.3rem 0;
-  color: #555;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
 }
 
+/* ---------------- BUTTON ---------------- */
 .session-card button {
-  background-color: #ff66b2;
+  background: linear-gradient(90deg, #9f7aea, #ec4899);
   color: #fff;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.4rem;
   margin-top: 1rem;
   border: none;
   border-radius: 25px;
   cursor: pointer;
   font-size: 0.95rem;
-  font-weight: bold;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-weight: 600;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .session-card button:hover {
-  background-color: #e0559f;
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(236, 72, 153, 0.4);
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 600px) {
+  .virtual-h1 {
+    font-size: 1.6rem;
+    margin: 1.5rem 1rem;
+  }
+
+  .session-card {
+    padding: 1.2rem;
+  }
+
+  .session-card button {
+    width: 100%;
+  }
+}
+
+/* ---------------- ANIMATIONS ---------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
   </style>
 </head>

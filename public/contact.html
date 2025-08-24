@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact Care Team</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style1.css" />
   <style>
-    body {
+     /* body {
   font-family: Arial, sans-serif;
-  /* padding: 20px; */
+  padding: 20px; 
   background: #f3f3f3;
 }
 .contact-section {
@@ -48,7 +48,176 @@
 #status {
   text-align: center;
   margin-top: 10px;
-  font-weight: bold;
+  font-weight: bold; 
+} */
+
+/* ===== Global Styling ===== */
+
+
+/* ===== Header ===== */
+/* ---------- Base Theme ---------- */
+body {
+  margin: 0;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated glowing orbs in background */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.6;
+  animation: floatOrb 18s infinite alternate ease-in-out;
+  z-index: 0;
+}
+body::before {
+  width: 400px;
+  height: 400px;
+  top: -150px;
+  left: -150px;
+  background: radial-gradient(circle, rgba(255, 0, 150, 0.6), transparent 70%);
+}
+body::after {
+  width: 500px;
+  height: 500px;
+  bottom: -200px;
+  right: -200px;
+  background: radial-gradient(circle, rgba(255, 165, 0, 0.6), transparent 70%);
+}
+
+@keyframes floatOrb {
+  from {
+    transform: translateY(0px) scale(1);
+  }
+  to {
+    transform: translateY(-50px) scale(1.1);
+  }
+}
+
+/* ---------- Header ---------- */
+header {
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header .logo {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ff66cc;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+header a:hover {
+  color: #ff66cc;
+}
+
+/* ---------- Contact Section ---------- */
+.contact-section {
+  position: relative;
+  z-index: 1;
+  margin-top: 3rem;
+  max-width: 500px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  animation: fadeIn 1s ease forwards;
+}
+
+.contact-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #ff66cc, #ff9900);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* ---------- Form ---------- */
+#contact-form input,
+#contact-form textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 8px #ff66cc;
+}
+
+#contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ---------- Button ---------- */
+#contact-form button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ff66cc, #ff9900);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#contact-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 102, 204, 0.4);
+}
+
+#status {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #ffccff;
+  text-shadow: 0 0 6px rgba(255, 102, 204, 0.8);
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
   </style>
 </head>

@@ -1,16 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medication Schedule</title>
-    <link rel="stylesheet" href="style.css" />
-    <style>.medication-h1{
+    <link rel="stylesheet" href="style1.css" />
+    <style>
+      /* ---------- Base Theme ---------- */
+body {
+  margin: 0;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated glowing orbs */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.6;
+  animation: floatOrb 20s infinite alternate ease-in-out;
+  z-index: 0;
+}
+body::before {
+  width: 400px;
+  height: 400px;
+  top: -150px;
+  left: -150px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.4), transparent 70%);
+}
+body::after {
+  width: 500px;
+  height: 500px;
+  bottom: -200px;
+  right: -200px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.4), transparent 70%);
+}
+@keyframes floatOrb {
+  from { transform: scale(1) translateY(0); }
+  to { transform: scale(1.1) translateY(-40px); }
+}
+
+/* ---------- Header ---------- */
+header {
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+header .logo {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ff66cc;
+}
+header a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+header a:hover {
+  color: #ff66cc;
+}
+
+/* ---------- Title ---------- */
+.medication-h1 {
   text-align: center;
-  color:#b3005e;
-  margin: 2rem;
-} 
+  margin: 2rem 0 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #ff66cc, #ff9900);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Form ---------- */
 .form-box {
   display: flex;
   justify-content: center;
@@ -18,65 +99,88 @@
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .form-box input[type="text"],
 .form-box input[type="time"] {
   padding: 10px 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1rem;
   width: 200px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+.form-box input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 8px #ff66cc;
 }
 
+/* ---------- Add Button ---------- */
 .form-box button {
-  background-color: #e91e63;
+  background: linear-gradient(135deg, #ff66cc, #ff9900);
   color: white;
   border: none;
   padding: 10px 20px;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
-
 .form-box button:hover {
-  background-color: #c2185b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 102, 204, 0.4);
 }
 
+/* ---------- Medication List ---------- */
 #medList {
   list-style: none;
   padding: 0;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
+  position: relative;
+  z-index: 1;
 }
-
 #medList li {
-  background: #fff;
-  border: 1px solid #eee;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 12px 20px;
   margin: 10px 0;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.6s ease forwards;
 }
 
+/* Delete button */
 #medList button {
   background: #ff1744;
   color: white;
   border: none;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
-
 #medList button:hover {
   background: #c51162;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
