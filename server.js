@@ -14,87 +14,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const PORT = process.env.PORT || 3000;
 
-// // Register Doctor
-// app.post('/register-doctor', (req, res) => {
-//   const { name, email, password } = req.body;
-
-//   if (!name || !email || !password) {
-//     return res.status(400).json({ message: 'Missing fields' });
-//   }
-
-//   // Read existing data
-//   let doctors = [];
-//   if (fs.existsSync(doctorsFile)) {
-//     const data = fs.readFileSync(doctorsFile);
-//     doctors = JSON.parse(data);
-//   }
-
-//   // Check for duplicate email
-//   const exists = doctors.find(doc => doc.email === email);
-//   if (exists) {
-//     return res.status(400).json({ message: 'Email already registered!' });
-//   }
-
-//   // Add new doctor
-//   doctors.push({ name, email, password });
-
-//   // Save to file
-//   fs.writeFileSync(doctorsFile, JSON.stringify(doctors, null, 2));
-//   res.status(200).json({ message: 'Doctor registered successfully' });
-// });
-
-// // Login Doctor
-// app.post("/login-doctor", (req, res) => {
-//   const { email, password } = req.body;
-//   const doctors = JSON.parse(fs.readFileSync(doctorFilePath, "utf8") || "[]");
-
-//   const found = doctors.find(d => d.email === email && d.password === password);
-//   if (found) {
-//     res.json({ message:` Welcome, Dr. ${found.name} `});
-//   } else {
-//     res.json({ message: "Invalid credentials" });
-//   }
-// });
-
-
-
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Favorite button~~~~~~~~~~~~~~~~~~~~~
-// let favorites = [];
-
-// app.get('/api/favorites', (req, res) => {
-//   res.json(favorites);
-// })
-// app.post('/api/favorites', (req, res) => {
-//   const { name } = req.body;
-//   if (name) {
-//     favorites.push(name);
-//     res.status(201).json({ message: 'Favorite added', favorites });
-//   } else {
-//     res.status(400).json({ error: 'Name is required' });
-//   }
-// });
-
-// app.delete('/api/favorites/:index', (req, res) => {
-//   const index = parseInt(req.params.index);
-//   if (!isNaN(index) && index >= 0 && index < favorites.length) {
-//     favorites.splice(index, 1);
-//     res.json({ message: 'Favorite deleted', favorites });
-//   } else {
-//     res.status(400).json({ error: 'Invalid index' });
-//   }
-// });
-// app.put('/api/favorites/:index', (req, res) => {
-//   const index = parseInt(req.params.index);
-//   const { name } = req.body;
-//   if (!isNaN(index) && index >= 0 && index < favorites.length && name) {
-//     favorites[index] = name;
-//     res.json({ message: 'Favorite updated', favorites });
-//   } else {
-//     res.status(400).json({ error: 'Invalid request' });
-//   }
-// })
-
 // ~~~~~~~~~~~~~~~~~~~~~~~~~one to one counseling~~~~~~~~~~~~~~~~~~`
 // Endpoint to get counselors
 app.get('/api/counselors', (req, res) => {
@@ -123,7 +42,7 @@ app.post('/api/sessions/join', (req, res) => {
   console.log(`📥 ${name} registered for session ${sessionId}`);
   res.json({ message:` You have joined the session successfully! `});
 });
-// Emergency route
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Emergency route
 app.post("/api/emergency", (req, res) => {
   const { name, phone, reason } = req.body;
 
@@ -202,7 +121,6 @@ app.post('/api/contact', (req, res) => {
   const { name, email, message } = req.body;
   const contactData = { name, email, message, timestamp: new Date().toISOString() };
 
-  // Save to file (you can use a DB instead)
   const filepath = path.join(__dirname, 'contact_messages.json');
   const existing = fs.existsSync(filepath) ? JSON.parse(fs.readFileSync(filepath)) : [];
 
